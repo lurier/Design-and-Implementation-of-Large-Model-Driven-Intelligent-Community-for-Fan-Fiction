@@ -1,0 +1,78 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+  tomcat:
+    max-http-form-post-size: 10MB
+
+spring:
+  application:
+    name: fanfaction-web
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/fanfaction?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      database: 0
+      timeout: 5000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 1000ms
+
+  # Elasticsearch has been removed, using MySQL full-text search instead
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.fanfaction.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+jwt:
+  secret: VGhpcyBpcyBhIHZlcnkgc2VjcmV0IGtleSBmb3IgSldUIHNpZ25pbmcgYW5kIGl0IG11c3QgYmUgYXQgbGVhc3QgMjU2IGJpdHMgbG9uZyBmb3IgSFMyNTYgYWxnb3JpdGht
+  expiration: 86400000
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+# AI大模型配置（使用DeepSeek）
+ai:
+  qwen:
+    # API Key
+    api-key: sk-08707061f4814568aa5ff53b54772b09
+    # 基础URL，DeepSeek API
+    base-url: https://api.deepseek.com/v1/chat/completions
+    # 模型名称
+    model: deepseek-chat
+    # 超时时间（毫秒）
+    timeout: 30000
